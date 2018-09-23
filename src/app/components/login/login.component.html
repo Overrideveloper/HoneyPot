@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+          <div class="login-panel panel panel-default">
+              <div class="panel-heading">
+                  <h3 class="panel-title">User Login</h3>
+              </div>
+              <div class="panel-body">
+                  <form role="form">
+                      <fieldset>
+                          <div class="form-group">
+                              <input class="form-control" [(ngModel)]="user.username" placeholder="Username" name="username" type="text" autofocus>
+                          </div>
+                          <div class="form-group">
+                              <input class="form-control" [(ngModel)]="user.password" placeholder="Password" name="password" type="password">
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                  <a [routerLink]="['/admin/login']" routerLinkActive="router-link-active">Admin Login</a>
+                              </label>
+                          </div>
+                          <button (click)="submit()" [disabled]="user.password === '' || user.username === ''" class="btn btn-lg btn-success btn-block">Login</button>
+                      </fieldset>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

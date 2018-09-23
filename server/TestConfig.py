@@ -1,0 +1,7 @@
+class TestConfig:
+    TWILIO_SID = 'ACadd743dfd3d45f4f1446db89638cbe04'
+    TWILIO_TOKEN = '1QYBTf2tDgyzc6GA8w4ycef7HjWoPgk6j'
+    TWILIO_NUMBER = '+18504047010'
+    MAILTRAP_USER = ''
+    MAILTRAP_PASSWORD = ''
+    TEST_EMAIL = ''

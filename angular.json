@@ -23,9 +23,23 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/vendor/bootstrap/css/bootstrap.min.css",
+              "src/assets/vendor/metisMenu/metisMenu.min.css",
+              "src/assets/vendor/datatables/css/dataTables.bootstrap.css",
+              "src/assets/vendor/datatables-responsive/dataTables.responsive.css",
+              "src/assets/dist/css/sb-admin-2.css",
+              "src/assets/vendor/font-awesome/css/font-awesome.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/vendor/jquery/jquery.min.js",
+              "src/assets/vendor/bootstrap/js/bootstrap.min.js",
+              "src/assets/vendor/metisMenu/metisMenu.min.js",
+              "src/assets/vendor/datatables/js/jquery.dataTables.min.js",
+              "src/assets/vendor/datatables-responsive/dataTables.responsive.js",
+              "src/assets/dist/js/sb-admin-2.js",
+              "src/assets/datatables.js"
+            ]
           },
           "configurations": {
             "production": {

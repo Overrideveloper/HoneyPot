@@ -1,7 +1,7 @@
 declare var require: any;
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 const config = require('../../../config');
 
 @Component({
@@ -12,8 +12,11 @@ const config = require('../../../config');
 export class EnterOtpComponent implements OnInit {
   URL: any;
   verification = '';
+  trial: any;
 
-  constructor(public http: HttpClient, public router: Router) { }
+  constructor(public http: HttpClient, public router: Router, public route: ActivatedRoute) {
+    this.trial = route.snapshot.paramMap.get('trial');
+  }
 
   ngOnInit() {
     this.URL = config.url;
@@ -22,6 +25,7 @@ export class EnterOtpComponent implements OnInit {
   submit() {
     const form = new FormData();
     form.append('otp', this.verification);
+    form.append('trial', this.trial);
 
     this.http.post(`${this.URL}auth/login/two`, form).subscribe((data: any) => {
       console.log(data);

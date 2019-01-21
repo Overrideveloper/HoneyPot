@@ -1,0 +1,83 @@
+<div id="wrapper">
+  <!-- Navigation -->
+  <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand">HoneyPot Admin</a>
+    </div>
+      <!-- /.navbar-header -->
+    <div class="navbar-default sidebar" role="navigation">
+      <div class="sidebar-nav navbar-collapse">
+        <ul class="nav" id="side-menu">
+          <li>
+            <a [routerLink]="['/admin/landing']"><i class="fa fa-users"></i> Users List</a>
+          </li>
+          <li>
+            <a [routerLink]="['/admin/logs']"><i class="fa fa-folder`"></i> Logs</a>
+          </li>
+          <li>
+            <a [routerLink]="['/admin/user']"><i class="fa fa-user"></i> New User</a>
+          </li>
+          <li>
+            <a (click)="logout()"><i class="fa fa-close"></i> Logout</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.sidebar-collapse -->
+    </div>
+    <!-- /.navbar-static-side -->
+  </nav>
+
+  <div id="page-wrapper">
+    <div class="row">
+      <div class="col-lg-12">
+        <h3 class="page-header">Logs</h3><br/>
+        <p>This is a record of <strong>all the login attempts on the system</strong>. It details <strong>the account the login was attempted on</strong>,
+          <strong>when the attempt was made</strong>, <strong>how many login attempts were made consecutively</strong>
+          and <strong>the outcome (either success or failure) of each login attempt.</strong></p>
+      </div>
+      <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+          </div>
+          <!-- /.panel-heading -->
+          <div class="panel-body table-responsive">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+              <thead>
+                <tr>
+                  <th>Account attempted to access</th>
+                  <th>Time of attempt</th>
+                  <th>Consecutive attempts</th>
+                  <th>Outcome</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let log of logs | paginate: { itemsPerPage: 6, currentPage: p }">
+                  <td>{{log.user}}</td>
+                  <td>{{date.convertToDate(log.time)}}</td>
+                  <td>{{log.attempts}}</td>
+                  <td class="text-success" *ngIf="log.success === true">Success</td>
+                  <td class="text-danger" *ngIf="log.success === false">Failure</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.panel-body -->
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+        <!-- /.panel -->
+      </div>
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /#page-wrapper -->
+</div>

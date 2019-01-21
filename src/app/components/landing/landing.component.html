@@ -13,14 +13,20 @@
       <!-- /.navbar-header -->
       <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
-          <ul class="nav" id="side-menu">
+            <ul class="nav" id="side-menu">
               <li>
-                  <a><i class="fa fa-home"></i> Home</a>
+                <a [routerLink]="['/admin/landing']"><i class="fa fa-users"></i> Users List</a>
               </li>
               <li>
-                  <a (click)="logout()"><i class="fa fa-close"></i> Logout</a>
+                <a [routerLink]="['/admin/logs']"><i class="fa fa-folder`"></i> Logs</a>
               </li>
-          </ul>
+              <li>
+                <a [routerLink]="['/admin/user']"><i class="fa fa-user"></i> New User</a>
+              </li>
+              <li>
+                <a (click)="logout()"><i class="fa fa-close"></i> Logout</a>
+              </li>
+            </ul>
         </div>
         <!-- /.sidebar-collapse -->
       </div>
@@ -49,6 +55,10 @@
                     <li><b>Serial Number</b>: {{user.serial_no}}</li>
                     <li><b>Phone Number</b>: {{user.phone}}</li>
                     <li><b>IMEI</b>: {{user.imei}}</li>
+                    <li><b>CA 1</b>: {{user.ca1}}</li>
+                    <li><b>CA 2</b>: {{user.ca2}}</li>
+                    <li><b>CA 3</b>: {{user.ca3}}</li>
+                    <li><b>CA (TOTAL)</b>: {{user.total}}</li>
                   </ul>
                 </div>
                 <!-- /.panel-body -->

@@ -12,6 +12,8 @@ const config = require('../../../config');
 export class AdminLandingComponent implements OnInit {
   URL: any;
   users: any = [];
+  p = 1;
+
   constructor(public router: Router, public http: HttpClient) { }
 
   ngOnInit() {

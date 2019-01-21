@@ -36,13 +36,13 @@ export class LoginComponent implements OnInit {
           swal(`Having trouble logging in? Enter your phone number for verification.`, {
             icon: 'info'
           });
-          this.router.navigate([`verify/${this.user.username}`]);
+          this.router.navigate([`verify/${this.user.username}/${this.user.trial}`]);
         }
       } else if (data.code === 200 && data.message === true) {
         swal(data.data, {
           icon: 'success'
         });
-        this.router.navigate(['verification']);
+        this.router.navigate([`verification/${this.user.trial}`]);
       }
     });
   }

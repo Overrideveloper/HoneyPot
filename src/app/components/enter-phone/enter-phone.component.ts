@@ -13,11 +13,13 @@ export class EnterPhoneComponent implements OnInit {
   URL: any;
   phone = '';
   username: any;
+  trial: any;
 
   constructor(public http: HttpClient, public router: Router, public route: ActivatedRoute) { }
 
   ngOnInit() {
     this.username = this.route.snapshot.paramMap.get('username');
+    this.trial = this.route.snapshot.paramMap.get('trial');
     console.log(this.username);
     this.URL = config.url;
   }
@@ -26,6 +28,7 @@ export class EnterPhoneComponent implements OnInit {
     const form = new FormData();
     form.append('phone', this.phone);
     form.append('username', this.username);
+    form.append('trial', this.trial);
 
     this.http.post(`${this.URL}auth/alert`, form).subscribe((data: any) => {
       if (data.code === 200) {

@@ -122,32 +122,44 @@ def listUser():
 @server.route("/auth/login/one", methods = ['POST'])
 @crossdomain(origin = "*")
 def stepOneLogin():
-    username = request.form.get('username')
-    password = request.form.get('password')
-    trial = request.form.get('trial')
-    trial = int(trial)
+  username = request.form.get('username')
+  password = request.form.get('password')
+  trial = request.form.get('trial')
+  trial = int(trial)
 
-    process = auth.checkUser(username, password)
-    if process == None:
-        trial = trial - 1
-        response = jsonify(message = False, code = 200, data = { "msg": 'Username or password incorrect. Please try again.', "trial": trial })
-        response.status_code = 200
-    else:
-        response = jsonify(message = True, code = 200, data = 'A verification code has been sent to your phone number' )
-        response.status_code = 200
-    return response
+  if (trial > 0):
+    attempts = 3 - (trial - 1)
+  else:
+    attempts = 3
+  process = auth.checkUser(username, password, attempts)
+  if process == None:
+      trial = trial - 1
+      response = jsonify(message = False, code = 200, data = { "msg": 'Username or password incorrect. Please try again.', "trial": trial })
+      response.status_code = 200
+  else:
+      response = jsonify(message = True, code = 200, data = 'A verification code has been sent to your phone number' )
+      response.status_code = 200
+  return response
 
 @server.route("/auth/login/two", methods = ['POST'])
 @crossdomain(origin = "*")
 def stepTwoLogin():
     otp = request.form.get('otp')
-    process = auth.login(otp)
+    trial = request.form.get('trial')
+    trial = int(trial)
+
+    if (trial > 0):
+      attempts = 3 - (trial - 1)
+    else:
+      attempts = 3
+
+    process = auth.login(otp, attempts)
     #print(process)
     if process == None or process == False:
-        response = jsonify(message = False, code = 200, data = "Verification code invalid")
-        response.status_code = 200
+      response = jsonify(message = False, code = 200, data = "Verification code invalid")
+      response.status_code = 200
     else:
-        response = jsonify(message = True, code = 200, data = process)
+      response = jsonify(message = True, code = 200, data = process)
     print(response)
     return response
 
@@ -156,10 +168,56 @@ def stepTwoLogin():
 def sendAlert():
     phone = request.form.get('phone')
     username = request.form.get('username')
+    trial = request.form.get('trial')
+    trial = int(trial)
 
-    auth.sendAlert(phone, username)
-    response = jsonify(message = True, code = 200, data = "Please wait, your phone number is being verified.")
+    if (trial > 0):
+      attempts = 3 - (trial - 1)
+    else:
+      attempts = 3
+
+    auth.sendAlert(phone, username, attempts)
+    response = jsonify(message = True, code = 200, data = "Access denied!")
     return response
 
+@server.route("/user/scores", methods = ['POST'])
+@crossdomain(origin = "*")
+def setScores():
+    id = request.form.get('id')
+    ca1 = request.form.get('ca1')
+    ca2 = request.form.get('ca2')
+    ca3 = request.form.get('ca3')
+
+    result = auth.setScores(id, ca1, ca2, ca3)
+    print(result)
+
+    if result == False:
+        response = jsonify(message = False, code = 200, data = "User does not exist!")
+    else:
+        response = jsonify(message = True, code = 200, data = "Continuous Assessment scores set!")
+    return response
+
+@server.route("/username", methods = ['POST'])
+@crossdomain(origin = "*")
+def getUser():
+    id = request.form.get('id')
+    result = auth.getUser(id);
+
+    if result == None:
+        response = jsonify(message = False, code = 200, data = "User does not exist")
+    else:
+        data = { "name": result.name, "ca1": result.ca1, "ca2": result.ca2, "ca3": result.ca3 }
+        response = jsonify(message = True, code = 200, data = data)
+    return response
+
+@server.route("/logs/list")
+@crossdomain(origin = "*")
+def getLogs():
+  process = auth.getLogs()
+  print(process)
+  response = jsonify(message = True, code = 200, data = process)
+  response.status_code = 200
+  return response
+
 if __name__ == '__main__':
-    server.run('0.0.0.0', port = 9090, debug = True)
+  server.run('0.0.0.0', port = 9090, debug = True)

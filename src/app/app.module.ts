@@ -21,6 +21,8 @@ import { AdminLandingComponent } from './components/admin-landing/admin-landing.
 import { AddUserComponent } from './components/add-user/add-user.component';
 import { EnterOtpComponent } from './components/enter-otp/enter-otp.component';
 import { EnterPhoneComponent } from './components/enter-phone/enter-phone.component';
+import { AddScoresComponent } from './components/add-scores/add-scores.component';
+import { LogsComponent } from './components/logs/logs.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -29,9 +31,11 @@ const routes: Routes = [
   { path: 'admin/signup', component: SignupComponent },
   { path: 'landing', component: LandingComponent, canActivate: [UserGuard] },
   { path: 'admin/landing', component: AdminLandingComponent, canActivate: [AdminGuard] },
+  { path: 'admin/logs', component: LogsComponent, canActivate: [AdminGuard] },
   { path: 'admin/user', component: AddUserComponent, canActivate: [AdminGuard] },
-  { path: 'verification', component: EnterOtpComponent },
-  { path: 'verify/:username', component: EnterPhoneComponent }
+  { path: 'admin/scores/:id', component: AddScoresComponent, canActivate: [AdminGuard] },
+  { path: 'verification/:trial', component: EnterOtpComponent },
+  { path: 'verify/:username/:trial', component: EnterPhoneComponent }
 ];
 
 @NgModule({
@@ -44,7 +48,9 @@ const routes: Routes = [
     AdminLandingComponent,
     AddUserComponent,
     EnterOtpComponent,
-    EnterPhoneComponent
+    EnterPhoneComponent,
+    AddScoresComponent,
+    LogsComponent
   ],
   imports: [
     BrowserModule,
